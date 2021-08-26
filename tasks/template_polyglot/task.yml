@@ -1,0 +1,11 @@
+flag: wwi{Hyp3Rte#t_3xP3Rts_6R0up}
+
+compose:
+  ports:
+    - 8000
+  service:
+    restart: always
+    build: ./
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000

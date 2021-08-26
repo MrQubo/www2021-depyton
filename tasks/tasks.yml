@@ -5,3 +5,5 @@ ports:
     - 2001
   globals2:
     - 2002
+  template_polyglot:
+    - 2003
