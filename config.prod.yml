@@ -1,8 +1,90 @@
 compose:
   version: '3.4'
 
+  services:
+
+    nginx:
+      restart: always
+      build: ./nginx/
+      depends_on:
+        - ctfd
+      volumes:
+        - ./docker-volumes/nginx/logs:/var/log
+      ports:
+        - 0.0.0.0:80:8000
+        - 0.0.0.0:443:8443
+      networks:
+        - default
+        - proxy
+
+    ctfd-db:
+      restart: always
+      image: mariadb:10.4.12
+      # This command is required to set important mariadb defaults
+      command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci, --wait_timeout=28800, --log-warnings=1]
+      environment:
+        - MYSQL_ROOT_PASSWORD=W09EG5zCeBQsarr7O3cIKq2UlSNxlRa8
+        - MYSQL_USER=m905K5f9VIT3jkr3oGKzipaFpDFBhz3Y
+        - MYSQL_PASSWORD=UsSXnEtsfDUigQ2CdmYtA9fN6uzlRlc9
+        - MYSQL_DATABASE=ctfd
+      volumes:
+        - ./docker-volumes/ctfd-db/logs:/var/log
+        - ./docker-volumes/ctfd-db/mysql:/var/lib/mysql
+      expose:
+        - 3306
+      networks:
+        - ctfd-db
+
+    ctfd-cache:
+      restart: always
+      image: redis:4
+      volumes:
+        - ./docker-volumes/ctfd-cache/logs:/var/log
+        - ./docker-volumes/ctfd-cache/data:/data
+      expose:
+        - 6379
+      networks:
+        - ctfd-cache
+
+    ctfd:
+      restart: always
+      build: ./CTFd
+      depends_on:
+        - ctfd-db
+        - ctfd-cache
+      user: root
+      environment:
+        - DATABASE_URL=mysql+pymysql://m905K5f9VIT3jkr3oGKzipaFpDFBhz3Y:UsSXnEtsfDUigQ2CdmYtA9fN6uzlRlc9@ctfd-db:3306/ctfd
+        - REDIS_URL=redis://ctfd-cache:6379
+        - WORKERS=1
+        - UPLOAD_FOLDER=/var/uploads
+        - LOG_FOLDER=/var/log/CTFd
+        - ACCESS_LOG=/var/log/gunicorn.access.log
+        - ERROR_LOG=/var/log/gunicorn.error.log
+        - USE_SSL=false
+        - REVERSE_PROXY=true
+      volumes:
+        - ./CTFd:/opt/CTFd:ro
+        - ./docker-volumes/ctfd/logs:/var/log
+        - ./docker-volumes/ctfd/uploads:/var/uploads
+      ports:
+        - 127.0.0.1:8000:8000
+      expose:
+        - 8000
+      networks:
+        - proxy
+        - ctfd-db
+        - ctfd-cache
+
+
   networks:
     default:
+    ctfd-db:
+      internal: true
+    ctfd-cache:
+      internal: true
+    proxy:
+      internal: true
 
 
 host: 0.0.0.0

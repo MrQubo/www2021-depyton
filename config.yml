@@ -1,8 +1,74 @@
 compose:
   version: '3.4'
 
+  services:
+
+    ctfd-db:
+      restart: always
+      image: mariadb:10.4.12
+      # This command is required to set important mariadb defaults
+      command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci, --wait_timeout=28800, --log-warnings=1]
+      environment:
+        - MYSQL_ROOT_PASSWORD=Bax7SGsF7k3LCSOApcb0REulnqGrXPRM
+        - MYSQL_USER=2WRhR6TYT2cwfm5z4YrXTvR5hRMkoOmn
+        - MYSQL_PASSWORD=2TZ36yZwpeQGKc4Cg5GzMoDEsyzkAtgk
+        - MYSQL_DATABASE=ctfd
+      volumes:
+        - /var/log
+        - /var/lib/mysql
+      expose:
+        - 3306
+      networks:
+        - ctfd-db
+
+    ctfd-cache:
+      restart: always
+      image: redis:4
+      volumes:
+        - /var/log
+        - /data
+      expose:
+        - 6379
+      networks:
+        - ctfd-cache
+
+    ctfd:
+      restart: always
+      build: ./CTFd
+      depends_on:
+        - ctfd-db
+        - ctfd-cache
+      user: root
+      environment:
+        - DATABASE_URL=mysql+pymysql://2WRhR6TYT2cwfm5z4YrXTvR5hRMkoOmn:2TZ36yZwpeQGKc4Cg5GzMoDEsyzkAtgk@ctfd-db:3306/ctfd
+        - REDIS_URL=redis://ctfd-cache:6379
+        - WORKERS=1
+        - UPLOAD_FOLDER=/var/uploads
+        - LOG_FOLDER=/var/log/CTFd
+        - ACCESS_LOG=/var/log/gunicorn.access.log
+        - ERROR_LOG=/var/log/gunicorn.error.log
+        - USE_SSL=false
+        - REVERSE_PROXY=true
+      volumes:
+        - ./CTFd:/opt/CTFd:ro
+        - /var/log/CTFd
+        - /var/uploads
+      ports:
+        - 127.0.0.1:8000:8000
+      expose:
+        - 8000
+      networks:
+        - default
+        - ctfd-db
+        - ctfd-cache
+
+
   networks:
     default:
+    ctfd-db:
+      internal: true
+    ctfd-cache:
+      internal: true
 
 
 host: 127.0.0.1
