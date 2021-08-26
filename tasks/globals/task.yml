@@ -1,0 +1,8 @@
+compose:
+  ports:
+    - 8000
+  service:
+    restart: always
+    build: ./
+    environment:
+      - HOST=0.0.0.0

@@ -1,3 +1,5 @@
 ports:
   templates:
     - 2000
+  globals:
+    - 2001
