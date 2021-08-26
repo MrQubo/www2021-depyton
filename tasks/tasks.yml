@@ -3,3 +3,5 @@ ports:
     - 2000
   globals:
     - 2001
+  globals2:
+    - 2002
