@@ -1,0 +1,5 @@
+attrs==20.3.0
+click==8.0.1
+docker-composer==0.8.5
+loguru==0.5.3
+PyYAML==5.4.1
