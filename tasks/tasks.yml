@@ -1,3 +1,9 @@
+ctfd:
+  - templates
+  - globals
+  - globals2
+  - template_polyglot
+
 ports:
   templates:
     - 2000
