@@ -394,15 +394,13 @@ def services_up(services, **kwargs):
     _services_up_common(services, **kwargs)
 
 def services_up_ctfd_and_tasks(**kwargs):
-    ensure_ctfd_submodule()
-    ensure_nsjail_image()
-
     services = get_tasks_config()['ctfd']
     if production:
         services += ['nginx']
     else:
         services += ['ctfd']
-    _services_up_common(services, **kwargs)
+    #  _services_up_common(services, **kwargs)
+    services_up(services, **kwargs)
 
 
 def _services_stop_common(services):
