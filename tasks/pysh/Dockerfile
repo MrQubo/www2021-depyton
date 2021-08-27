@@ -1,7 +1,7 @@
 FROM	www-py_nsjail AS runner
 
 RUN	apt-get update && apt-get install -y --no-install-recommends \
-	python3 \
+	python3.6 \
 	&& rm -r /var/lib/apt/lists/*
 
 COPY	nsjail.sh /opt/
