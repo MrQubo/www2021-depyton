@@ -1,5 +1,7 @@
 declare SOURCE_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
+declare -x CTF_PROJECT_NAME=www-py
+
 
 main() (
 
@@ -13,7 +15,7 @@ cd -- "$SOURCE_DIR"
 if [[ ! -e venv/ ]]; then
 	echo >&2 "Creating python's venv..."
 	declare -r PYTHON="${PYTHON-python3}"
-	"$PYTHON" -m venv venv --prompt www-py
+	"$PYTHON" -m venv venv --prompt "$CTF_PROJECT_NAME"
 	[[ -e venv/bin/activate ]] || return 1
 	. venv/bin/activate
 	pip install -U pip setuptools

@@ -16,6 +16,8 @@ os.environ['COMPOSE_DOCKER_CLI_BUILD'] = '1'
 
 source_dir = Path(__file__).resolve().parent
 
+project_name = os.environ.get('CTF_PROJECT_NAME', 'ctf')
+
 
 def ensure_path_parents(path):
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -258,7 +260,7 @@ def docker_compose():
     file = [str(compose_yml_filename())]
 
     ensure_docker_is_running()
-    return DockerCompose(file=file, project_name='ctf')
+    return DockerCompose(file=file, project_name=project_name)
 
 
 def dockerfile_has_public_target(dockerfile):
