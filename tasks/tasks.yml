@@ -4,6 +4,7 @@ ctfd:
   - globals2
   - template_polyglot
   - pickle
+  - pysh
 
 ports:
   templates:
@@ -16,3 +17,5 @@ ports:
     - 2003
   pickle:
     - 2004
+  pysh:
+    - 2005
