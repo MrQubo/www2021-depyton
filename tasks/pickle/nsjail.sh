@@ -8,7 +8,7 @@ declare -a args=(
 	--user app --group app
 	--cwd /app
 	-R /bin -R /usr -R /lib -R /lib64
-	-R /app
+	-R /app -R /flag
 	--time_limit 0
 	--verbose
 )
