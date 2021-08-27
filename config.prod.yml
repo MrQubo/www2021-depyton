@@ -3,6 +3,10 @@ compose:
 
   services:
 
+    nsjail:
+      build: ./nsjail
+      networks: []
+
     nginx:
       restart: always
       build: ./nginx/

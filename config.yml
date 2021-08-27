@@ -3,6 +3,10 @@ compose:
 
   services:
 
+    nsjail:
+      build: ./nsjail
+      networks: []
+
     ctfd-db:
       restart: always
       image: mariadb:10.4.12

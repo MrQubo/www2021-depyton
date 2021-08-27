@@ -1,3 +1,6 @@
 [submodule "CTFd"]
 	path = CTFd
 	url = https://github.com/MrQubo/wwi-2021-ctf-ctfd.git
+[submodule "nsjail"]
+	path = nsjail
+	url = https://github.com/google/nsjail.git
