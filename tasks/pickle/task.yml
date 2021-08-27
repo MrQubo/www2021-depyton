@@ -1,0 +1,7 @@
+compose:
+  ports:
+    - 8000
+  service:
+    privileged: true  # nsjail
+    restart: always
+    build: ./

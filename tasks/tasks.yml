@@ -3,6 +3,7 @@ ctfd:
   - globals
   - globals2
   - template_polyglot
+  - pickle
 
 ports:
   templates:
@@ -13,3 +14,5 @@ ports:
     - 2002
   template_polyglot:
     - 2003
+  pickle:
+    - 2004
