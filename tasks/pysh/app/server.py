@@ -1,8 +1,12 @@
-#!/usr/bin/env python3
+#!/usr/bin/python
 
 from base64 import b64decode
+import sys
 
 import secure_pickle as pickle
+
+
+print("# Python " + sys.version)
 
 
 def login():

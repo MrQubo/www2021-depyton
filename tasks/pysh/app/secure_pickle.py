@@ -1,4 +1,4 @@
-#!/usr/bin/env pythone3
+#!/usr/bin/python
 
 import pickle, io
 
