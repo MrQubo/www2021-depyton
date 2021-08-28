@@ -5,6 +5,7 @@ ctfd:
   - template_polyglot
   - pickle
   - pysh
+  - python_is_fun
 
 ports:
   templates:
@@ -19,3 +20,5 @@ ports:
     - 2004
   pysh:
     - 2005
+  python_is_fun:
+    - 2006
